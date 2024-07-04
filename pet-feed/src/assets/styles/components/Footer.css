@@ -1,0 +1,46 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+@import url("https://fonts.googleapis.com/css2?family=Baskervville+SC&display=swap");
+.footer {
+  font-family: "Baskervville SC", serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-left: 10vw;
+  width: 80vw;
+}
+
+.footer hr {
+  border: 0.5px solid #9c8266;
+}
+.information {
+  display: flex;
+  justify-content: space-between;
+}
+.footer_title {
+  font-size: 30px;
+}
+img {
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+}
+span {
+  margin-top: 10px;
+  margin-right: 10px;
+  font-size: 20px;
+}
+.phone {
+  display: flex;
+  justify-content: space-between;
+}
+.email {
+  display: flex;
+  justify-content: space-between;
+}
+.social {
+  display: flex;
+  justify-content: space-between;
+}
+
+.social_img {
+  display: flex;
+}

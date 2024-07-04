@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+.firstPage {
+  display: flex;
+  justify-content: space-between;
+}
+.firstPage img {
+  width: 500px;
+  height: 500px;
+  margin-left: 10rem;
+}
+.intro {
+  padding-top: 5rem;
+}
+.introLogo {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 60px;
+}
+.rightinfo {
+  padding-right: 15rem;
+}
+.goto {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.product img {
+  width: 200px;
+  height: 300px;
+  animation: fade 2s linear 0s;
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.suggestpage {
+  margin-top: 10rem;
+  padding-top: 10rem;
+  padding-bottom: 10rem;
+
+  background-color: #eceada;
+}
+.product_intro {
+  display: flex;
+  justify-content: space-between;
+}
