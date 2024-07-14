@@ -7,32 +7,50 @@ import Box from "@mui/material/Box";
 import petfeed1 from "../assets/image/petfeed1.jpg";
 import "../assets/styles/components/Searcher.css";
 import Button from "@mui/material/Button";
-
+import axios from "axios";
 export default function Searcher({ onAddProduct }) {
-  const productsByBrand = {
-    Queen: ["L40 體重控制成貓專用乾糧", "S37 絕育成貓專用乾糧"],
-    Hills: ["希爾斯產品1", "希爾斯產品2"],
-    Nutram: ["紐頓產品1", "紐頓產品2"],
-  };
   const [brand, setBrand] = useState("");
   const [product, setProduct] = useState("");
+  const [productList, setProductList] = useState([]);
+  const getProductList = async (brand_id) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/api/products/${brand_id}`
+      );
+      setProductList(response.data);
+    } catch (error) {
+      console.error("Error fetching ProductList:", error);
+    }
+  };
+
   const handleBrandChange = (event) => {
     const selectedBrand = event.target.value;
     setBrand(selectedBrand);
     setProduct(""); // 重置產品選擇
+    getProductList(selectedBrand);
   };
   const handleProductChange = (event) => {
     const selectedProduct = event.target.value;
     setProduct(selectedProduct);
   };
-  const handleAddClick = () => {
+  const handleAddClick = async () => {
     if (product) {
-      onAddProduct(product);
-      // 可選：重置選擇
-      // setBrand("");
-      // setProduct("");
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/products/ingredients",
+          {
+            params: { brandId: brand, product_name: product },
+          }
+        );
+        onAddProduct(product, response.data.ingredients);
+      } catch (error) {
+        console.error("Error fetching ingredients:", error);
+      }
     }
   };
+
+  const comparesame = () => {};
+
   return (
     <div className="display_page">
       <img src={petfeed1} alt="petfeed1" />
@@ -47,7 +65,7 @@ export default function Searcher({ onAddProduct }) {
               value={brand}
               label="品牌"
             >
-              <MenuItem value="Queen">皇家</MenuItem>
+              <MenuItem value="1">皇家</MenuItem>
               <MenuItem value="Hills">希爾斯</MenuItem>
               <MenuItem value="Nutram">紐頓</MenuItem>
             </Select>
@@ -63,12 +81,11 @@ export default function Searcher({ onAddProduct }) {
               label="產品"
               onChange={handleProductChange}
             >
-              {brand &&
-                productsByBrand[brand].map((product) => (
-                  <MenuItem key={product} value={product}>
-                    {product}
-                  </MenuItem>
-                ))}
+              {productList.map((product, index) => (
+                <MenuItem key={index} value={product}>
+                  {product}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Box>

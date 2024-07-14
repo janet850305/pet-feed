@@ -5,10 +5,11 @@ import PetfeedTable from "./PetfeedTable";
 const ProductDisplay = () => {
   const [selectedProducts, setSelectedProducts] = useState([]);
 
-  const handleAddProduct = (product) => {
-    if (!selectedProducts.includes(product)) {
-      setSelectedProducts([...selectedProducts, product]);
-    }
+  const handleAddProduct = (productName, ingredients) => {
+    setSelectedProducts([
+      ...selectedProducts,
+      { name: productName, ingredients },
+    ]);
   };
 
   return (
@@ -16,9 +17,8 @@ const ProductDisplay = () => {
       <div className="Search">
         <Searcher onAddProduct={handleAddProduct} />
       </div>
-      {selectedProducts.length > 0 && (
-        <PetfeedTable products={selectedProducts} />
-      )}
+
+      <PetfeedTable products={selectedProducts} />
     </div>
   );
 };
