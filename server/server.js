@@ -1,22 +1,22 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3001;
 const sequelize = require("./config/db");
+const { Sequelize } = require("sequelize");
 
-sequelize
-  .authenticate()
-  .then(() => {
+(async () => {
+  try {
+    await sequelize.authenticate();
     console.log("Database connected");
-    return sequelize.sync();
-  })
-  .then(() => {
+    await sequelize.sync(); // 同步數據庫模型
     console.log("Models synchronized");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });
-
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+    process.exit(1); // 如果無法連接數據庫，退出程序
+  }
+})();
 // 使用 CORS 中间件
 app.use(cors());
 
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// 錯誤處理中間件
+// 错误处理中间件
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
